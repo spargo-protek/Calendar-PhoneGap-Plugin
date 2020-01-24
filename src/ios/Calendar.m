@@ -45,7 +45,7 @@
   NSNumber* startTime  = [options objectForKey:@"startTime"];
   NSNumber* endTime    = [options objectForKey:@"endTime"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     NSTimeInterval _startInterval = [startTime doubleValue] / 1000; // strip millis
     NSDate *myStartDate = [NSDate dateWithTimeIntervalSince1970:_startInterval];
     NSTimeInterval _endInterval = [endTime doubleValue] / 1000; // strip millis
@@ -85,7 +85,7 @@
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 - (EKRecurrenceFrequency) toEKRecurrenceFrequency:(NSString*) recurrence {
@@ -131,7 +131,7 @@
   NSString* calendarName = [calOptions objectForKey:@"calendarName"];
 
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
       NSArray *calendars = nil;
 
       if (calendarName == (id)[NSNull null]) {
@@ -257,7 +257,7 @@
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_NO_RESULT];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 
 }
 
@@ -272,7 +272,7 @@
   NSNumber* startTime  = [options objectForKey:@"startTime"];
   NSNumber* endTime    = [options objectForKey:@"endTime"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     NSTimeInterval _startInterval = [startTime doubleValue] / 1000; // strip millis
     NSDate *myStartDate = [NSDate dateWithTimeIntervalSince1970:_startInterval];
 
@@ -296,7 +296,7 @@
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 - (NSArray*) findEKEventsWithTitle: (NSString *)title
@@ -475,18 +475,18 @@
   NSDictionary* options = [command.arguments objectAtIndex:0];
   NSNumber* date = [options objectForKey:@"date"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     NSTimeInterval _startInterval = [date doubleValue] / 1000; // strip millis
     NSDate *openDate = [NSDate dateWithTimeIntervalSince1970:_startInterval];
     NSInteger interval = [openDate timeIntervalSinceReferenceDate];
 
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"calshow:%ld", interval]];
     [[UIApplication sharedApplication] openURL:url];
-  }];
+  //}];
 }
 
 - (void) listCalendars:(CDVInvokedUrlCommand*)command {
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     NSArray * calendars = [self.eventStore calendarsForEntityType:EKEntityTypeEvent];
     NSMutableArray *finalResults = [[NSMutableArray alloc] initWithCapacity:calendars.count];
     for (EKCalendar *thisCalendar in calendars) {
@@ -501,7 +501,7 @@
 
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsArray:finalResults];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 - (void) listEventsInRange:(CDVInvokedUrlCommand*)command {
@@ -509,7 +509,7 @@
   NSNumber* startTime  = [options objectForKey:@"startTime"];
   NSNumber* endTime    = [options objectForKey:@"endTime"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
       NSLog(@"listEventsInRange invoked");
       NSTimeInterval _startInterval = [startTime doubleValue] / 1000; // strip millis
       NSDate *startDate = [NSDate dateWithTimeIntervalSince1970:_startInterval];
@@ -530,7 +530,7 @@
       pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsArray:eventsDataArray];
 
       [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];  
+  //}];  
 }
 
 - (void)createEventWithOptions:(CDVInvokedUrlCommand*)command {
@@ -551,7 +551,7 @@
   NSString* calendarName = [calOptions objectForKey:@"calendarName"];
   NSString* url = [calOptions objectForKey:@"url"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     EKEvent *myEvent = [EKEvent eventWithEventStore: self.eventStore];
     if (url != (id)[NSNull null]) {
       NSURL* myUrl = [NSURL URLWithString:url];
@@ -642,7 +642,7 @@
       pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:myEvent.eventIdentifier];
     }
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 - (void) createEventInteractively:(CDVInvokedUrlCommand*)command {
@@ -700,7 +700,7 @@
       myEvent.notes = notes;
   }
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     EKCalendar* calendar = nil;
 
     if (calendarName == (id)[NSNull null]) {
@@ -754,7 +754,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.viewController presentViewController:controller animated:YES completion:nil];
     });
-  }];
+  //}];
 }
 
 - (void) deleteEventFromNamedCalendar:(CDVInvokedUrlCommand*)command {
@@ -790,7 +790,7 @@
   NSString* ciid = [options objectForKey:@"id"];
   NSNumber* fromTime = [options objectForKey:@"fromTime"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
 
     // Get original instance
     EKEvent* firstEvent = (EKEvent *)[eventStore eventWithIdentifier:ciid];
@@ -833,7 +833,7 @@
         return;
       }
     }
-  }];
+  //}];
 }
 
 - (void) findAllEventsInNamedCalendar:(CDVInvokedUrlCommand*)command {
@@ -870,7 +870,7 @@
   NSString* calEventID = [calOptions objectForKey:@"id"];
   NSString* calendarName = [calOptions objectForKey:@"calendarName"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     NSTimeInterval _startInterval = [startTime doubleValue] / 1000; // strip millis
     NSDate *myStartDate = [NSDate dateWithTimeIntervalSince1970:_startInterval];
 
@@ -925,7 +925,7 @@
     NSMutableArray * eventsDataArray = [self eventsToDataArray:matchingEvents];
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus: CDVCommandStatus_OK messageAsArray:eventsDataArray];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 
@@ -934,7 +934,7 @@
   NSString* calendarName = [options objectForKey:@"calendarName"];
   NSString* hexColor = [options objectForKey:@"calendarColor"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     EKCalendar *cal = [self findEKCalendar:calendarName];
     CDVPluginResult* pluginResult = nil;
 
@@ -963,7 +963,7 @@
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 // Assumes input like "#00FF00" (#RRGGBB)
@@ -979,7 +979,7 @@
   NSDictionary* options = [command.arguments objectAtIndex:0];
   NSString* calendarName = [options objectForKey:@"calendarName"];
 
-  [self.commandDelegate runInBackground: ^{
+  //[self.commandDelegate runInBackground: ^{
     EKCalendar *thisCalendar = [self findEKCalendar:calendarName];
     CDVPluginResult* pluginResult = nil;
 
@@ -998,7 +998,7 @@
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-  }];
+  //}];
 }
 
 - (void) eventEditViewController:(EKEventEditViewController*)controller didCompleteWithAction:(EKEventEditViewAction) action {
